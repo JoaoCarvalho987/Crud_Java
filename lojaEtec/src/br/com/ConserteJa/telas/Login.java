@@ -23,10 +23,22 @@ public class Login extends javax.swing.JFrame {
             rs = pst.executeQuery();
             if (rs.next()){
                 //abluablaublaue
-                TelaPrincipal tela = new TelaPrincipal();
-                tela.setVisible(true);
-                this.dispose();
-                conexao.close();
+                String perfil = rs.getString(6);
+                if (perfil.equals("admin")){
+                    TelaPrincipal tela = new TelaPrincipal();
+                    tela.setVisible(true);
+                    tela.menuRelas.setEnabled(true);
+                    tela.usuarios.setEnabled(true);
+                    tela.user.setText(rs.getString(2));
+                    this.dispose();
+                    conexao.close();
+                } else{
+                    TelaPrincipal tela = new TelaPrincipal();
+                    tela.setVisible(true);
+                    tela.user.setText(rs.getString(2));
+                    this.dispose();
+                    conexao.close();
+                }
             } else{
                 JOptionPane.showMessageDialog(null, "Os dados estão incorretos!");
             }
