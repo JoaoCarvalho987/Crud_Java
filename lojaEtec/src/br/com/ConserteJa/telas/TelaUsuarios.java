@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.ConserteJa.telas;
 import java.sql.*;
 import br.com.ConserteJa.dal.conecta;
@@ -12,7 +7,9 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
      
     Connection conexao;
     PreparedStatement pst;
+    PreparedStatement pstA;
     ResultSet rs;
+    ResultSet rsA;
     
     
     private void consultar(){
@@ -69,6 +66,64 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
         }
     }
     
+    private void update(){
+        String sql = "UPDATE usuarios set nome=?, fone=?, email=?, senha=?, perfil=? where idUser=?";
+        String sqlA = "SELECT * FROM usuarios WHERE idUser=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, nome.getText());
+            pst.setString(2, tel.getText());
+            pst.setString(3, email.getText());
+            String senhazinha = new String(senha.getPassword());
+            pst.setString(4, senhazinha);
+            pst.setString(5, Perfil.getSelectedItem().toString());
+            pst.setString(6, id.getText());
+            if (id.getText().isEmpty() || nome.getText().isEmpty() || tel.getText().isEmpty() || email.getText().isEmpty() || senha.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            }else {
+                int adicionado = pst.executeUpdate();
+                if (adicionado > 0) {
+                    pstA = conexao.prepareStatement(sqlA);
+                    pstA.setString(1, id.getText());
+                    rsA = pstA.executeQuery();
+                    if (rsA.next()){
+                        JOptionPane.showMessageDialog(null, "Dados do usuário "+ rsA.getString(2) + " foram atualizados!");
+                    }
+                    id.setText(null);
+                    nome.setText(null);
+                    tel.setText(null);
+                    email.setText(null);
+                    senha.setText(null);
+                    Perfil.setSelectedItem(null);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    private void deletar(){
+        int confirma = JOptionPane.showConfirmDialog(null, "Deseja mesmo remover este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_OPTION){
+            String sql = "DELETE from usuarios WHERE idUser=?";
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, id.getText());
+                int apa = pst.executeUpdate();
+                if (apa > 0){
+                    JOptionPane.showMessageDialog(null, "Usuário removido");
+                    id.setText(null);
+                    nome.setText(null);
+                    tel.setText(null);
+                    email.setText(null);
+                    senha.setText(null);
+                    Perfil.setSelectedItem(null);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
     public TelaUsuarios() {
         initComponents();
         conexao = conecta.conector();
@@ -141,9 +196,19 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
 
         editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ConserteJa/icones/update.png"))); // NOI18N
         editar.setPreferredSize(new java.awt.Dimension(80, 80));
+        editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarActionPerformed(evt);
+            }
+        });
 
         deletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ConserteJa/icones/delete.png"))); // NOI18N
         deletar.setPreferredSize(new java.awt.Dimension(80, 80));
+        deletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletarActionPerformed(evt);
+            }
+        });
 
         senha.setText("jPasswordField1");
 
@@ -231,6 +296,14 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
     private void procurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarActionPerformed
         consultar();
     }//GEN-LAST:event_procurarActionPerformed
+
+    private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
+        update();
+    }//GEN-LAST:event_editarActionPerformed
+
+    private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
+        deletar();
+    }//GEN-LAST:event_deletarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
