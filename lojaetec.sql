@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27-Set-2021 às 21:00
+-- Tempo de geração: 28-Out-2021 às 16:16
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 8.0.0
 
@@ -43,7 +43,11 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`idcli`, `nomecli`, `endcli`, `fonecli`, `emailcli`) VALUES
 (1, 'lk', 'rua', '11964825341', 'lk@gmail.com'),
-(2, 'hec', 'bairro', '11978425361', 'hec@gmail.com');
+(2, 'hec', 'bairro', '11978425361', 'hec@gmail.com'),
+(3, 'Ana', 'aaa', 'eee', 'ana@gmail.com'),
+(4, 'Arnadd', 'aa', '99', 'arnaldo@gmail.com'),
+(5, 'Armagedon', 'Armagedon', '88', 'Armagedon@gmail.com'),
+(6, 'Alex', 'Alex', '887', 'Alex@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -125,7 +129,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `idcli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idcli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `ordem_servico`
