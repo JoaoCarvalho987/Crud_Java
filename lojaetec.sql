@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 28-Out-2021 às 16:16
+-- Tempo de geração: 17-Nov-2021 às 22:45
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 8.0.0
 
@@ -44,10 +44,11 @@ CREATE TABLE `clientes` (
 INSERT INTO `clientes` (`idcli`, `nomecli`, `endcli`, `fonecli`, `emailcli`) VALUES
 (1, 'lk', 'rua', '11964825341', 'lk@gmail.com'),
 (2, 'hec', 'bairro', '11978425361', 'hec@gmail.com'),
-(3, 'Ana', 'aaa', 'eee', 'ana@gmail.com'),
+(3, 'AnaAAaaa', 'aaa', 'eee', 'ana@gmail.com'),
 (4, 'Arnadd', 'aa', '99', 'arnaldo@gmail.com'),
 (5, 'Armagedon', 'Armagedon', '88', 'Armagedon@gmail.com'),
-(6, 'Alex', 'Alex', '887', 'Alex@gmail.com');
+(6, 'Alex', 'Alex', '887', 'Alex@gmail.com'),
+(8, 'Jovem nando', 'nana', '87454', 'nando');
 
 -- --------------------------------------------------------
 
@@ -58,6 +59,8 @@ INSERT INTO `clientes` (`idcli`, `nomecli`, `endcli`, `fonecli`, `emailcli`) VAL
 CREATE TABLE `ordem_servico` (
   `idOrdem` int(11) NOT NULL,
   `data_os` timestamp NOT NULL DEFAULT current_timestamp(),
+  `tipo` varchar(15) NOT NULL,
+  `situacao` varchar(50) NOT NULL,
   `equipamento` varchar(150) NOT NULL,
   `defeito` varchar(150) NOT NULL,
   `servico` varchar(150) DEFAULT NULL,
@@ -70,8 +73,9 @@ CREATE TABLE `ordem_servico` (
 -- Extraindo dados da tabela `ordem_servico`
 --
 
-INSERT INTO `ordem_servico` (`idOrdem`, `data_os`, `equipamento`, `defeito`, `servico`, `tecnico`, `valor`, `idcli`) VALUES
-(1, '2021-08-27 19:28:19', 'placa de vídeo', 'queimou', 'trocar', 'bla', '145.00', 2);
+INSERT INTO `ordem_servico` (`idOrdem`, `data_os`, `tipo`, `situacao`, `equipamento`, `defeito`, `servico`, `tecnico`, `valor`, `idcli`) VALUES
+(1, '2021-08-27 19:28:19', '', '', 'placa de vídeo', 'queimou', 'trocar', 'bla', '145.00', 2),
+(2, '2021-11-17 21:22:25', 'Orçamento', 'Entregue', 'Computador', 'placa queimada', 'Reparação total', 'Kohjgd', '65641.00', 3);
 
 -- --------------------------------------------------------
 
@@ -95,7 +99,8 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`idUser`, `nome`, `fone`, `email`, `senha`, `perfil`) VALUES
 (1, 'Admin', '11978462351', 'admin@gmail.com', 'admin', 'admin'),
 (2, 'Adm3', '3159745', 'admin3@gmail.co', 'admin', 'user'),
-(3, 'Admi', '11978', 'n2@gmail.co', '4845', 'user');
+(3, 'Admi', '11978', 'n2@gmail.co', '4845', 'user'),
+(6, 'Carvalho', '98975451', 'emgial', 'AASDUFHADHBF', 'admin');
 
 --
 -- Índices para tabelas despejadas
@@ -129,19 +134,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `idcli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idcli` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `ordem_servico`
 --
 ALTER TABLE `ordem_servico`
-  MODIFY `idOrdem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idOrdem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restrições para despejos de tabelas
