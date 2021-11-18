@@ -25,6 +25,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ordem de servi&#xe7;o"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="osActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="cliente">
               <Properties>

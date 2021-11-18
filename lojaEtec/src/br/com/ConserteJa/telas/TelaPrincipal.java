@@ -75,6 +75,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1.add(usuarios);
 
         os.setText("Ordem de serviço");
+        os.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                osActionPerformed(evt);
+            }
+        });
         jMenu1.add(os);
 
         cliente.setText("Cliente");
@@ -178,6 +183,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_sairActionPerformed
+
+    private void osActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_osActionPerformed
+        TelaOrdemServico OS = new TelaOrdemServico();
+        OS.setVisible(true);
+        menu.add(OS);
+    }//GEN-LAST:event_osActionPerformed
 
     /**
      * @param args the command line arguments

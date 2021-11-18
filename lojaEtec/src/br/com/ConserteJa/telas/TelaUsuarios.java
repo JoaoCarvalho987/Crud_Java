@@ -11,7 +11,14 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
     ResultSet rs;
     ResultSet rsA;
     
-    
+    private void limpar(){
+        id.setText(null);
+        nome.setText(null);
+                tel.setText(null);
+                email.setText(null);
+                senha.setText(null);
+                Perfil.setSelectedItem(null);
+    }
     private void consultar(){
         String sql = "SELECT * FROM usuarios WHERE idUser=?";
         try {
@@ -26,11 +33,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                 Perfil.setSelectedItem(rs.getString(6));
             } else{
                 JOptionPane.showMessageDialog(null, "Usuário não encontrado/cadastrado!");
-                nome.setText(null);
-                tel.setText(null);
-                email.setText(null);
-                senha.setText(null);
-                Perfil.setSelectedItem(null);
+                limpar();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -54,11 +57,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                 int adicionado = pst.executeUpdate();
                 if (adicionado > 0) {
                     JOptionPane.showMessageDialog(null, "Usuário adicionado!");
-                    nome.setText(null);
-                    tel.setText(null);
-                    email.setText(null);
-                    senha.setText(null);
-                    Perfil.setSelectedItem(null);
+                    limpar();
                 }
             }
         } catch (Exception e) {
@@ -89,12 +88,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                     if (rsA.next()){
                         JOptionPane.showMessageDialog(null, "Dados do usuário "+ rsA.getString(2) + " foram atualizados!");
                     }
-                    id.setText(null);
-                    nome.setText(null);
-                    tel.setText(null);
-                    email.setText(null);
-                    senha.setText(null);
-                    Perfil.setSelectedItem(null);
+                    limpar();
                 }
             }
         } catch (Exception e) {
@@ -112,12 +106,7 @@ public class TelaUsuarios extends javax.swing.JInternalFrame {
                 int apa = pst.executeUpdate();
                 if (apa > 0){
                     JOptionPane.showMessageDialog(null, "Usuário removido");
-                    id.setText(null);
-                    nome.setText(null);
-                    tel.setText(null);
-                    email.setText(null);
-                    senha.setText(null);
-                    Perfil.setSelectedItem(null);
+                    limpar();
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
