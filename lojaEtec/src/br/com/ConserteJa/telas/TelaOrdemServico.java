@@ -17,6 +17,44 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
     }
 
     
+    private void pesquisar_os(){
+    
+        String num_os = JOptionPane.showInputDialog("Número da OS: ");
+        String sql = "Select * FROM ordem_servico WHERE idOrdem = " + num_os;
+        try {
+            pst = conexao.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()){
+                txtOS.setText(rs.getString(1));
+                txtData.setText(rs.getString(2));
+                
+                String radio_tipo = rs.getString(3);
+                if (radio_tipo.equals("Ordem de serviço")){
+                    rbtOS.setSelected(true);
+                    tipo = "Ordem de serviço";
+                } else {
+                    rbtOrc.setSelected(true);
+                    tipo = "Orçamento";
+                }
+                cboSituacao.setSelectedItem(rs.getString(4));
+                txtOSEquipamento.setText(rs.getString(5));
+                txtOSDefeito.setText(rs.getString(6));
+                txtOSServico.setText(rs.getString(9));
+                txtOSTecnico.setText(rs.getString(7));
+                txtValor.setText(rs.getString(8));
+                txtIdCli.setText(rs.getString(10));
+                
+                btnAdicionar.setEnabled(false);
+                txtCliPesquisar.setEnabled(false);
+                tblClientes.setEnabled(false);
+            } else{
+                JOptionPane.showMessageDialog(null, "Ordem de serviço não cadastrada");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     private void pesquisar_clientes(){
         String sql = "Select idcli as ID, nomecli as Nome, fonecli as Telefone"
                 + " FROM clientes WHERE nomecli LIKE ?";
@@ -417,7 +455,7 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarActionPerformed
-        // TODO add your handling code here:
+        pesquisar_os();
     }//GEN-LAST:event_btnProcurarActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
