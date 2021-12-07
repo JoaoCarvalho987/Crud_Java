@@ -17,6 +17,43 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
     }
 
     
+    private void alterar(){
+        String sql = "UPDATE ordem_servico SET tipo=?, situacao=?, equipamento=?, "
+                + "defeito=?, servico=?, tecnico=?, valor=? WHERE idOrdem=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, tipo);
+            pst.setString(2, cboSituacao.getSelectedItem().toString());
+            pst.setString(3, txtOSEquipamento.getText());
+            pst.setString(4, txtOSDefeito.getText());
+            pst.setString(5, txtOSServico.getText());
+            pst.setString(6, txtOSTecnico.getText());
+            pst.setString(7, txtValor.getText().replace(",", "."));
+            pst.setString(8, txtOS.getText());
+            if (txtIdCli.getText().isEmpty() || txtOSEquipamento.getText().isEmpty() || txtOSDefeito.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Preencha todos os dados!");
+            }else {
+                int adicionado = pst.executeUpdate();
+                if (adicionado > 0) {
+                    JOptionPane.showMessageDialog(null, "Ordem de serviço foi alterada!");
+                    txtOS.setText(null);
+                    txtData.setText(null);
+                    txtIdCli.setText(null);
+                    txtOSEquipamento.setText(null);
+                    txtOSDefeito.setText(null);
+                    txtOSTecnico.setText(null);
+                    txtOSServico.setText(null);
+                    txtValor.setText(null);
+                    btnAdicionar.setEnabled(true);
+                    txtCliPesquisar.setEnabled(true);
+                    tblClientes.setEnabled(true);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
     private void pesquisar_os(){
     
         String num_os = JOptionPane.showInputDialog("Número da OS: ");
@@ -29,9 +66,9 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
                 txtData.setText(rs.getString(2));
                 
                 String radio_tipo = rs.getString(3);
-                if (radio_tipo.equals("Ordem de serviço")){
+                if (radio_tipo.equals("OS")){
                     rbtOS.setSelected(true);
-                    tipo = "Ordem de serviço";
+                    tipo = "OS";
                 } else {
                     rbtOrc.setSelected(true);
                     tipo = "Orçamento";
@@ -39,9 +76,9 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
                 cboSituacao.setSelectedItem(rs.getString(4));
                 txtOSEquipamento.setText(rs.getString(5));
                 txtOSDefeito.setText(rs.getString(6));
-                txtOSServico.setText(rs.getString(9));
-                txtOSTecnico.setText(rs.getString(7));
-                txtValor.setText(rs.getString(8));
+                txtOSServico.setText(rs.getString(7));
+                txtOSTecnico.setText(rs.getString(8));
+                txtValor.setText(rs.getString(9));
                 txtIdCli.setText(rs.getString(10));
                 
                 btnAdicionar.setEnabled(false);
@@ -311,6 +348,11 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
         jLabel10.setText("Valor total");
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ConserteJa/icones/update.png"))); // NOI18N
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnProcurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ConserteJa/icones/read.png"))); // NOI18N
         btnProcurar.addActionListener(new java.awt.event.ActionListener() {
@@ -446,7 +488,7 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_rbtOrcActionPerformed
 
     private void rbtOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtOSActionPerformed
-        tipo = "Ordem de serviço";
+        tipo = "OS";
     }//GEN-LAST:event_rbtOSActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
@@ -461,6 +503,10 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         emitir_os();
     }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+       alterar();
+    }//GEN-LAST:event_btnEditarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
